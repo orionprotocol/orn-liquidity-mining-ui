@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
-import Logo from '../../assets/svg/logo.svg'
-import LogoDark from '../../assets/svg/logo_white.svg'
+import Logo from '../../assets/svg/logo.png'
+import LogoDark from '../../assets/svg/logo.png'
 import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
 import { useETHBalances, useAggregateUniBalance } from '../../state/wallet/hooks'
@@ -134,7 +134,7 @@ const UNIAmount = styled(AccountElement)`
   height: 36px;
   font-weight: 500;
   background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
+  background: linear-gradient(135deg,rgba(0,255,170,1.0) 0%,rgba(0,187,255,1.0) 53%,rgba(69,121,245,1.0) 100%);
 `
 
 const UNIWrapper = styled.span`
@@ -298,31 +298,31 @@ export default function Header() {
           </UniIcon>
         </Title>
         <HeaderLinks>
-          <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-            {t('swap')}
+          {/*<StyledNavLink id={`swap-nav-link`} to={'/swap'}>*/}
+          {/*  {t('swap')}*/}
+          {/*</StyledNavLink>*/}
+          {/*<StyledNavLink*/}
+          {/*  id={`pool-nav-link`}*/}
+          {/*  to={'/pool'}*/}
+          {/*  isActive={(match, { pathname }) =>*/}
+          {/*    Boolean(match) ||*/}
+          {/*    pathname.startsWith('/add') ||*/}
+          {/*    pathname.startsWith('/remove') ||*/}
+          {/*    pathname.startsWith('/create') ||*/}
+          {/*    pathname.startsWith('/find')*/}
+          {/*  }*/}
+          {/*>*/}
+          {/*  {t('pool')}*/}
+          {/*</StyledNavLink>*/}
+          <StyledNavLink id={`stake-nav-link`} to={'/orn'}>
+            ORN
           </StyledNavLink>
-          <StyledNavLink
-            id={`pool-nav-link`}
-            to={'/pool'}
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/add') ||
-              pathname.startsWith('/remove') ||
-              pathname.startsWith('/create') ||
-              pathname.startsWith('/find')
-            }
-          >
-            {t('pool')}
-          </StyledNavLink>
-          <StyledNavLink id={`stake-nav-link`} to={'/uni'}>
-            UNI
-          </StyledNavLink>
-          <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
-            Vote
-          </StyledNavLink>
-          <StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>
-            Charts <span style={{ fontSize: '11px' }}>↗</span>
-          </StyledExternalLink>
+          {/*<StyledNavLink id={`stake-nav-link`} to={'/vote'}>*/}
+          {/*  Vote*/}
+          {/*</StyledNavLink>*/}
+          {/*<StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>*/}
+          {/*  Charts <span style={{ fontSize: '11px' }}>↗</span>*/}
+          {/*</StyledExternalLink>*/}
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>
@@ -336,7 +336,7 @@ export default function Header() {
             <UNIWrapper onClick={toggleClaimModal}>
               <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
                 <TYPE.white padding="0 2px">
-                  {claimTxn && !claimTxn?.receipt ? <Dots>Claiming UNI</Dots> : 'Claim UNI'}
+                  {claimTxn && !claimTxn?.receipt ? <Dots>Claiming ORN</Dots> : 'Claim ORN'}
                 </TYPE.white>
               </UNIAmount>
               <CardNoise />
@@ -363,7 +363,7 @@ export default function Header() {
                     </TYPE.white>
                   </HideSmall>
                 )}
-                UNI
+                ORN
               </UNIAmount>
               <CardNoise />
             </UNIWrapper>

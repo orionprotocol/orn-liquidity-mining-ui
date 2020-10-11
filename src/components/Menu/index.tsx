@@ -28,7 +28,7 @@ const StyledMenuButton = styled.button`
 
   padding: 0.15rem 0.5rem;
   border-radius: 0.5rem;
-
+  color: white;
   :hover,
   :focus {
     cursor: pointer;
@@ -96,42 +96,47 @@ export default function Menu() {
   useOnClickOutside(node, open ? toggle : undefined)
   const openClaimModal = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
 
-  return (
-    // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
-    <StyledMenu ref={node as any}>
-      <StyledMenuButton onClick={toggle}>
-        <StyledMenuIcon />
-      </StyledMenuButton>
+  return <StyledMenu ref={node as any}>
+       <StyledMenuButton onClick={openClaimModal}>
+    Claim
+       </StyledMenuButton>
+  </StyledMenu>
 
-      {open && (
-        <MenuFlyout>
-          <MenuItem id="link" href="https://uniswap.org/">
-            <Info size={14} />
-            About
-          </MenuItem>
-          <MenuItem id="link" href="https://uniswap.org/docs/v2">
-            <BookOpen size={14} />
-            Docs
-          </MenuItem>
-          <MenuItem id="link" href={CODE_LINK}>
-            <Code size={14} />
-            Code
-          </MenuItem>
-          <MenuItem id="link" href="https://discord.gg/EwFs3Pp">
-            <MessageCircle size={14} />
-            Discord
-          </MenuItem>
-          <MenuItem id="link" href="https://uniswap.info/">
-            <PieChart size={14} />
-            Analytics
-          </MenuItem>
-          {account && (
-            <ButtonPrimary onClick={openClaimModal} padding="8px 16px" width="100%" borderRadius="12px" mt="0.5rem">
-              Claim UNI
-            </ButtonPrimary>
-          )}
-        </MenuFlyout>
-      )}
-    </StyledMenu>
-  )
+  //
+  // <ButtonPrimary disabled={!account}  padding="4px 16px" width="100%" borderRadius="12px" mt="0.5rem">
+  //   Claim
+  // </ButtonPrimary>;
+
+    // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
+    // <StyledMenu ref={node as any}>
+    //   <StyledMenuButton onClick={toggle}>
+    //     <StyledMenuIcon />
+    //   </StyledMenuButton>
+    //
+    //   {open && (
+    //     <MenuFlyout>
+    //       <MenuItem id="link" href="https://uniswap.org/">
+    //         <Info size={14} />
+    //         About
+    //       </MenuItem>
+    //       <MenuItem id="link" href="https://uniswap.org/docs/v2">
+    //         <BookOpen size={14} />
+    //         Docs
+    //       </MenuItem>
+    //       <MenuItem id="link" href={CODE_LINK}>
+    //         <Code size={14} />
+    //         Code
+    //       </MenuItem>
+    //       <MenuItem id="link" href="https://discord.gg/EwFs3Pp">
+    //         <MessageCircle size={14} />
+    //         Discord
+    //       </MenuItem>
+    //       <MenuItem id="link" href="https://uniswap.info/">
+    //         <PieChart size={14} />
+    //         Analytics
+    //       </MenuItem>
+    //     </MenuFlyout>
+    //   )}
+    // </StyledMenu>
+  // )
 }

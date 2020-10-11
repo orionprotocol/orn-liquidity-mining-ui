@@ -354,6 +354,7 @@ export default function AddLiquidity({
               currency={currencies[Field.CURRENCY_A]}
               id="add-liquidity-input-tokena"
               showCommonBases
+              disableCurrencySelect={true}
             />
             <ColumnCenter>
               <Plus size="16" color={theme.text2} />
@@ -369,6 +370,7 @@ export default function AddLiquidity({
               currency={currencies[Field.CURRENCY_B]}
               id="add-liquidity-input-tokenb"
               showCommonBases
+              disableCurrencySelect={true}
             />
             {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
               <>
