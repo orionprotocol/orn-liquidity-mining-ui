@@ -186,14 +186,14 @@ export default function Manage({
         </PoolData>
       </DataRow>
 
-      {showAddLiquidityButton && (
+      {true && (
         <VoteCard>
           <CardBGImage />
           <CardNoise />
           <CardSection>
             <AutoColumn gap="md">
               <RowBetween>
-                <TYPE.white fontWeight={600}>Step 1. Get ORN-V2 Liquidity tokens</TYPE.white>
+                <TYPE.white fontWeight={600}>Get ORN-V2 Liquidity tokens</TYPE.white>
               </RowBetween>
               <RowBetween style={{ marginBottom: '1rem' }}>
                 <TYPE.white fontSize={14}>

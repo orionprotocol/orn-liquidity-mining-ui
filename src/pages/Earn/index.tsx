@@ -1,14 +1,16 @@
 import React from 'react'
-import { AutoColumn } from '../../components/Column'
+import {AutoColumn} from '../../components/Column'
 import styled from 'styled-components'
-import { STAKING_REWARDS_INFO, useStakingInfo } from '../../state/stake/hooks'
-import { TYPE, ExternalLink } from '../../theme'
+import {STAKING_REWARDS_INFO, useStakingInfo} from '../../state/stake/hooks'
+import {ExternalLink, TYPE} from '../../theme'
 import PoolCard from '../../components/earn/PoolCard'
-import { RowBetween } from '../../components/Row'
-import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earn/styled'
-import { Countdown } from './Countdown'
+import {RowBetween} from '../../components/Row'
+import {CardBGImage, CardNoise, CardSection, DataCard} from '../../components/earn/styled'
+import {Countdown} from './Countdown'
 import Loader from '../../components/Loader'
-import { useActiveWeb3React } from '../../hooks'
+import {useActiveWeb3React} from '../../hooks'
+import {ChainId, Pair, Token, TokenAmount, WETH} from "@uniswap/sdk";
+import {ORN, ZERO_ADDRESS} from "../../constants";
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
@@ -38,6 +40,8 @@ export default function Earn() {
     flex-direction: column;
   `};
   `
+  // const p = new Pair(new TokenAmount(WETH[ChainId.ROPSTEN], '0'), new TokenAmount(ORN, '0'))
+  // console.log('AAA', p.liquidityToken.address)
 
   const stakingRewardsExist = Boolean(typeof chainId === 'number' && (STAKING_REWARDS_INFO[chainId]?.length ?? 0) > 0)
 

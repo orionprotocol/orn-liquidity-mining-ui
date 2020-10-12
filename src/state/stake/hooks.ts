@@ -17,10 +17,20 @@ export const STAKING_REWARDS_INFO: {
     stakingRewardAddress: string
   }[]
 } = {
-  [ChainId.MAINNET]: [
+  // [ChainId.MAINNET]: [
+  //   {
+  //     tokens: [WETH[ChainId.MAINNET], ORN],
+  //     stakingRewardAddress: '0xa1484C3aa22a66C62b77E0AE78E15258bd0cB711'
+  //   }
+  //   {
+  //     tokens: [ORN, USDT],
+  //     stakingRewardAddress: '0x6C3e4cb2E96B01F4b866965A91ed4437839A121a'
+  //   }
+  // ],
+  [ChainId.ROPSTEN]: [
     {
-      tokens: [WETH[ChainId.MAINNET], ORN],
-      stakingRewardAddress: '0xa1484C3aa22a66C62b77E0AE78E15258bd0cB711'
+      tokens: [WETH[ChainId.ROPSTEN], ORN],
+      stakingRewardAddress: '0x883fBA08D1171703d99B6d7fB22B40D56a437532'
     }
     // {
     //   tokens: [ORN, USDT],
