@@ -1,6 +1,6 @@
 import { ChainId, CurrencyAmount, JSBI, Token, TokenAmount, WETH, Pair } from '@uniswap/sdk'
 import { useMemo } from 'react'
-import { DAI, ORN, UNI, USDC, USDT, WBTC } from '../../constants'
+import {DAI, ORN, UNI, USDC, USDT, WBTC, ZERO_ADDRESS} from '../../constants'
 import { STAKING_REWARDS_INTERFACE } from '../../constants/abis/staking-rewards'
 import { useActiveWeb3React } from '../../hooks'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
@@ -17,26 +17,22 @@ export const STAKING_REWARDS_INFO: {
     stakingRewardAddress: string
   }[]
 } = {
-  // [ChainId.MAINNET]: [
-  //   {
-  //     tokens: [WETH[ChainId.MAINNET], ORN],
-  //     stakingRewardAddress: '0xa1484C3aa22a66C62b77E0AE78E15258bd0cB711'
-  //   }
-  //   {
-  //     tokens: [ORN, USDT],
-  //     stakingRewardAddress: '0x6C3e4cb2E96B01F4b866965A91ed4437839A121a'
-  //   }
-  // ],
-  [ChainId.ROPSTEN]: [
+  [ChainId.MAINNET]: [
     {
-      tokens: [WETH[ChainId.ROPSTEN], ORN],
-      stakingRewardAddress: '0x6147e04E4F5c71bf32D1E9cf310eE816F1952363'
+      tokens: [WETH[ChainId.MAINNET], ORN],
+      stakingRewardAddress: ZERO_ADDRESS
+    },
+    {
+      tokens: [ORN, USDT],
+      stakingRewardAddress: ZERO_ADDRESS
     }
-    // {
-    //   tokens: [ORN, USDT],
-    //   stakingRewardAddress: '0x6C3e4cb2E96B01F4b866965A91ed4437839A121a'
-    // }
-  ]
+  ],
+  // [ChainId.ROPSTEN]: [
+  //   {
+  //     tokens: [WETH[ChainId.ROPSTEN], ORN],
+  //     stakingRewardAddress: '0x6147e04E4F5c71bf32D1E9cf310eE816F1952363'
+  //   }
+  // ]
 }
 
 export interface StakingInfo {

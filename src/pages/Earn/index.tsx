@@ -1,7 +1,7 @@
 import React from 'react'
 import {AutoColumn} from '../../components/Column'
 import styled from 'styled-components'
-import {STAKING_REWARDS_INFO, useStakingInfo} from '../../state/stake/hooks'
+import {STAKING_REWARDS_INFO, StakingInfo, useStakingInfo} from '../../state/stake/hooks'
 import {ExternalLink, TYPE} from '../../theme'
 import PoolCard from '../../components/earn/PoolCard'
 import {RowBetween} from '../../components/Row'
@@ -10,7 +10,7 @@ import {Countdown} from './Countdown'
 import Loader from '../../components/Loader'
 import {useActiveWeb3React} from '../../hooks'
 import {ChainId, Pair, Token, TokenAmount, WETH} from "@uniswap/sdk";
-import {ORN, ZERO_ADDRESS} from "../../constants";
+import {ORN, USDT, ZERO_ADDRESS} from "../../constants";
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
@@ -40,8 +40,34 @@ const FooterLink = styled.a`
 `
 
 export default function Earn() {
-  const { chainId } = useActiveWeb3React()
-  const stakingInfos = useStakingInfo()
+  const chainId = 1 // useActiveWeb3React()
+
+  const RATE = (30000 * 10e7 / (60 * 60 * 24 * 7)).toFixed(0);
+
+  let stakingInfos: StakingInfo[] = [
+    {
+      stakingRewardAddress: ZERO_ADDRESS,
+      tokens: [WETH[ChainId.MAINNET], ORN],
+      stakedAmount: new TokenAmount(ORN, '0'),
+      earnedAmount: new TokenAmount(ORN, '0'),
+      totalStakedAmount: new TokenAmount(ORN, '0'),
+      totalRewardRate: new TokenAmount(ORN, RATE),
+      rewardRate: new TokenAmount(ORN, RATE),
+      periodFinish: undefined,
+      getHypotheticalRewardRate: () => new TokenAmount(ORN, RATE)
+    },
+    {
+      stakingRewardAddress: ZERO_ADDRESS,
+      tokens: [USDT, ORN],
+      stakedAmount: new TokenAmount(ORN, '0'),
+      earnedAmount: new TokenAmount(ORN, '0'),
+      totalStakedAmount: new TokenAmount(ORN, '0'),
+      totalRewardRate: new TokenAmount(ORN, RATE),
+      rewardRate: new TokenAmount(ORN, RATE),
+      periodFinish: undefined,
+      getHypotheticalRewardRate: () => new TokenAmount(ORN, RATE)
+    },
+  ]
 
   const DataRow = styled(RowBetween)`
     ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -51,7 +77,9 @@ export default function Earn() {
   // const p = new Pair(new TokenAmount(WETH[ChainId.ROPSTEN], '0'), new TokenAmount(ORN, '0'))
   // console.log('AAA', p.liquidityToken.address)
 
-  const stakingRewardsExist = Boolean(typeof chainId === 'number' && (STAKING_REWARDS_INFO[chainId]?.length ?? 0) > 0)
+  let stakingRewardsExist = Boolean(typeof chainId === 'number' && (STAKING_REWARDS_INFO[chainId]?.length ?? 0) > 0)
+
+  stakingRewardsExist = true
 
   return (
     <PageWrapper gap="lg" justify="center">
@@ -86,7 +114,7 @@ export default function Earn() {
       <AutoColumn gap="lg" style={{ width: '100%', maxWidth: '720px' }}>
         <DataRow style={{ alignItems: 'baseline' }}>
           <TYPE.mediumHeader style={{ marginTop: '0.5rem' }}>Participating pools</TYPE.mediumHeader>
-          <Countdown exactEnd={stakingInfos?.[0]?.periodFinish} />
+          <Countdown exactEnd={new Date(1602835200000)} />
         </DataRow>
 
         <PoolSection>

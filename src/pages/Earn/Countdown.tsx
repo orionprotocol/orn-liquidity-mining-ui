@@ -45,6 +45,9 @@ export function Countdown({ exactEnd }: { exactEnd?: Date }) {
     }
   }
 
+  message = 'Rewards begin in'
+  timeRemaining = timeUntilEnd
+
   const days = (timeRemaining - (timeRemaining % DAY)) / DAY
   timeRemaining -= days * DAY
   const hours = (timeRemaining - (timeRemaining % HOUR)) / HOUR
