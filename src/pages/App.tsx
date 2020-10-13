@@ -68,14 +68,6 @@ const Marginer = styled.div`
   margin-top: 5rem;
 `
 
-const FooterLink = styled.a`
-  color: #888;
-  
-  :hover, :focus, :active {
-    color: #888;
-  }
-`
-
 function TopLevelModals() {
   const open = useModalOpen(ApplicationModal.ADDRESS_CLAIM)
   const toggle = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
@@ -125,9 +117,6 @@ export default function App() {
           </Web3ReactManager>
           <Marginer />
         </BodyWrapper>
-        <div style={{position: 'absolute', width: '100%', left: '0', bottom: '16px', paddingLeft: '16px', fontSize: '10px', color: '0x888'}}>
-          View source code on <FooterLink href="https://github.com/orionprotocol/orn-liquidity-mining-ui" target="_blank">GitHub</FooterLink>. Based on <FooterLink href="https://github.com/Uniswap/uniswap-interface" target="_blank">uniswap-interface</FooterLink>.
-        </div>
       </AppWrapper>
     </Suspense>
   )

@@ -31,6 +31,14 @@ const PoolSection = styled.div`
   justify-self: center;
 `
 
+const FooterLink = styled.a`
+  color: #888;
+  
+  :hover, :focus, :active {
+    color: #888;
+  }
+`
+
 export default function Earn() {
   const { chainId } = useActiveWeb3React()
   const stakingInfos = useStakingInfo()
@@ -58,7 +66,7 @@ export default function Earn() {
               </RowBetween>
               <RowBetween>
                 <TYPE.white fontSize={14}>
-                  Deposit your Liquidity Provider tokens to receive ORN, the Orion protocol token.
+                  Deposit your Liquidity Provider tokens to receive ORN, the Orion Protocol token.
                 </TYPE.white>
               </RowBetween>{' '}
               <ExternalLink
@@ -94,6 +102,10 @@ export default function Earn() {
           )}
         </PoolSection>
       </AutoColumn>
+
+      <div style={{position: 'absolute', width: '100%', left: '0', bottom: '16px', paddingLeft: '16px', fontSize: '10px', color: '0x888'}}>
+        View source code on <FooterLink href="https://github.com/orionprotocol/orn-liquidity-mining-ui" target="_blank">GitHub</FooterLink>. Based on <FooterLink href="https://github.com/Uniswap/uniswap-interface" target="_blank">uniswap-interface</FooterLink>.
+      </div>
     </PageWrapper>
   )
 }
