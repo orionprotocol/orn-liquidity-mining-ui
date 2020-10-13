@@ -29,13 +29,13 @@ export const STAKING_REWARDS_INFO: {
   // ],
   [ChainId.ROPSTEN]: [
     {
-      tokens: [WETH[ChainId.ROPSTEN], ORN],
+      tokens: [ORN, WETH[ChainId.ROPSTEN]],
       stakingRewardAddress: '0x6147e04E4F5c71bf32D1E9cf310eE816F1952363'
+    },
+    {
+      tokens: [ORN, USDT],
+      stakingRewardAddress: '0x8d4f51555DA88A549598Fe258dD9208f64992FCD'
     }
-    // {
-    //   tokens: [ORN, USDT],
-    //   stakingRewardAddress: '0x6C3e4cb2E96B01F4b866965A91ed4437839A121a'
-    // }
   ]
 }
 

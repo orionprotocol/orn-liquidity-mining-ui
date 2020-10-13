@@ -1,20 +1,19 @@
 import React from 'react'
-import { AutoColumn } from '../Column'
-import { RowBetween } from '../Row'
+import {AutoColumn} from '../Column'
+import {RowBetween} from '../Row'
 import styled from 'styled-components'
-import { TYPE, StyledInternalLink } from '../../theme'
+import {StyledInternalLink, TYPE} from '../../theme'
 import DoubleCurrencyLogo from '../DoubleLogo'
-import {ChainId, ETHER, JSBI, Pair, TokenAmount, WETH} from '@uniswap/sdk'
-import { ButtonPrimary } from '../Button'
-import { StakingInfo } from '../../state/stake/hooks'
-import { useColor } from '../../hooks/useColor'
-import { currencyId } from '../../utils/currencyId'
-import { Break, CardNoise, CardBGImage } from './styled'
-import { unwrappedToken } from '../../utils/wrappedCurrency'
-import { useTotalSupply } from '../../data/TotalSupply'
-import { usePair } from '../../data/Reserves'
+import {ChainId, ETHER, JSBI, TokenAmount} from '@uniswap/sdk'
+import {ButtonPrimary} from '../Button'
+import {StakingInfo} from '../../state/stake/hooks'
+import {useColor} from '../../hooks/useColor'
+import {currencyId} from '../../utils/currencyId'
+import {Break, CardBGImage, CardNoise} from './styled'
+import {unwrappedToken, wrappedCurrency} from '../../utils/wrappedCurrency'
+import {useTotalSupply} from '../../data/TotalSupply'
+import {usePair} from '../../data/Reserves'
 import useUSDCPrice from '../../utils/useUSDCPrice'
-import {ORN} from "../../constants";
 
 const StatContainer = styled.div`
   display: flex;
@@ -85,6 +84,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
   // get the color of the token
   const token = currency0 === ETHER ? token1 : token0
   const WETH = currency0 === ETHER ? token0 : token1
+  const USDT = currency1?.symbol === 'USDT' ? token1 : undefined
   const backgroundColor = useColor(token)
 
   const totalSupplyOfStakingToken = useTotalSupply(stakingInfo.stakedAmount.token)
@@ -108,8 +108,24 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
 
   // get the USD value of staked WETH
   const USDPrice = useUSDCPrice(WETH)
-  const valueOfTotalStakedAmountInUSDC =
+  let valueOfTotalStakedAmountInUSDC =
     valueOfTotalStakedAmountInWETH && USDPrice?.quote(valueOfTotalStakedAmountInWETH)
+
+  if (totalSupplyOfStakingToken && stakingTokenPair && stakingInfo && USDT) {
+    valueOfTotalStakedAmountInUSDC = new TokenAmount(
+        USDT,
+        JSBI.divide(
+          JSBI.divide(
+            JSBI.multiply(
+                JSBI.multiply(stakingInfo.totalStakedAmount.raw, stakingTokenPair.reserve1.raw),
+                JSBI.BigInt(2) // this is b/c the value of LP shares are ~double the value of the WETH they entitle owner to
+            ),
+            totalSupplyOfStakingToken.raw
+          ),
+          JSBI.BigInt(100)
+        )
+    )
+  }
 
   return (
     <Wrapper showBackground={isStaking} bgColor={backgroundColor}>
@@ -135,7 +151,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
           <TYPE.white>
             {valueOfTotalStakedAmountInUSDC
               ? `$${valueOfTotalStakedAmountInUSDC.toFixed(0, { groupSeparator: ',' })}`
-              : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ETH`}
+              : `${currency1?.symbol !== 'ETH' ? '-' : (valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-') + ' ETH'}`}
           </TYPE.white>
         </RowBetween>
         <RowBetween>

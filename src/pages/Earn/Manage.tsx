@@ -116,6 +116,7 @@ export default function Manage({
 
   const token = currencyA === ETHER ? tokenB : tokenA
   const WETH = currencyA === ETHER ? tokenA : tokenB
+  const USDT = currencyB?.symbol === 'USDT' ? tokenB : undefined
   const backgroundColor = useColor(token)
 
   // get WETH value of staked LP tokens
@@ -140,8 +141,21 @@ export default function Manage({
 
   // get the USD value of staked WETH
   const USDPrice = useUSDCPrice(WETH)
-  const valueOfTotalStakedAmountInUSDC =
+  let valueOfTotalStakedAmountInUSDC =
     valueOfTotalStakedAmountInWETH && USDPrice?.quote(valueOfTotalStakedAmountInWETH)
+
+  if (totalSupplyOfStakingToken && stakingTokenPair && stakingInfo && USDT) {
+    valueOfTotalStakedAmountInUSDC = new TokenAmount(
+        USDT,
+        JSBI.divide(
+            JSBI.multiply(
+                JSBI.multiply(stakingInfo.totalStakedAmount.raw, stakingTokenPair.reserve1.raw),
+                JSBI.BigInt(2) // this is b/c the value of LP shares are ~double the value of the WETH they entitle owner to
+            ),
+            totalSupplyOfStakingToken.raw
+        )
+    )
+  }
 
   const toggleWalletModal = useWalletModalToggle()
 
@@ -169,7 +183,7 @@ export default function Manage({
             <TYPE.body fontSize={24} fontWeight={500}>
               {valueOfTotalStakedAmountInUSDC
                 ? `$${valueOfTotalStakedAmountInUSDC.toFixed(0, { groupSeparator: ',' })}`
-                : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ETH`}
+                : `${currencyB?.symbol !== 'ETH' ? '-' : (valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-') + ' ETH'}`}
             </TYPE.body>
           </AutoColumn>
         </PoolData>

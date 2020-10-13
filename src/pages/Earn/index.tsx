@@ -10,7 +10,7 @@ import {Countdown} from './Countdown'
 import Loader from '../../components/Loader'
 import {useActiveWeb3React} from '../../hooks'
 import {ChainId, Pair, Token, TokenAmount, WETH} from "@uniswap/sdk";
-import {ORN, ZERO_ADDRESS} from "../../constants";
+import {ORN, USDT, ZERO_ADDRESS} from "../../constants";
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
@@ -48,8 +48,11 @@ export default function Earn() {
     flex-direction: column;
   `};
   `
-  // const p = new Pair(new TokenAmount(WETH[ChainId.ROPSTEN], '0'), new TokenAmount(ORN, '0'))
+  // const p = new Pair(new TokenAmount(ORN, '0'), new TokenAmount(WETH[ChainId.ROPSTEN], '0'),)
   // console.log('AAA', p.liquidityToken.address)
+
+  // const b = new Pair(new TokenAmount(ORN, '0'), new TokenAmount(USDT, '0'));
+  // console.log('BBB', b.liquidityToken.address)
 
   const stakingRewardsExist = Boolean(typeof chainId === 'number' && (STAKING_REWARDS_INFO[chainId]?.length ?? 0) > 0)
 
@@ -103,7 +106,7 @@ export default function Earn() {
         </PoolSection>
       </AutoColumn>
 
-      <div style={{position: 'absolute', width: '100%', left: '0', bottom: '16px', paddingLeft: '16px', fontSize: '10px', color: '0x888'}}>
+      <div style={{position: 'fixed', left: '0', bottom: '16px', paddingLeft: '16px', fontSize: '10px', color: '0x888'}}>
         View source code on <FooterLink href="https://github.com/orionprotocol/orn-liquidity-mining-ui" target="_blank">GitHub</FooterLink>. Based on <FooterLink href="https://github.com/Uniswap/uniswap-interface" target="_blank">uniswap-interface</FooterLink>.
       </div>
     </PageWrapper>
