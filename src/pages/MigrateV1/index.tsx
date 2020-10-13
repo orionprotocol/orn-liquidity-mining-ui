@@ -42,7 +42,7 @@ export default function MigrateV1() {
   const V1Exchanges = useAllTokenV1Exchanges()
   const V1LiquidityTokens: Token[] = useMemo(() => {
     return chainId
-      ? Object.keys(V1Exchanges).map(exchangeAddress => new Token(chainId, exchangeAddress, 18, 'ORN-V1', 'Orion V1'))
+      ? Object.keys(V1Exchanges).map(exchangeAddress => new Token(chainId, exchangeAddress, 18, 'UNI-V1', 'Uni V1'))
       : []
   }, [chainId, V1Exchanges])
   const [V1LiquidityBalances, V1LiquidityBalancesLoading] = useTokenBalancesWithLoadingIndicator(

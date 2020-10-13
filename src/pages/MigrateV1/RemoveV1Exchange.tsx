@@ -141,7 +141,7 @@ export default function RemoveV1Exchange({
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `ORN-V1-${token.symbol}`, 'Orion V1')
+        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${token.symbol}`, 'Uni V1')
         : undefined,
     [chainId, validatedAddress, token]
   )
