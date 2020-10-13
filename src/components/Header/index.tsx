@@ -342,7 +342,7 @@ export default function Header() {
               <CardNoise />
             </UNIWrapper>
           )}
-          {!availableClaim && aggregateBalance && (
+          {account && !availableClaim && aggregateBalance && (
             <UNIWrapper onClick={() => setShowUniBalanceModal(true)}>
               <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
                 {account && (
