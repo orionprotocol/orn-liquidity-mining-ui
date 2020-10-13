@@ -30,7 +30,7 @@ export const STAKING_REWARDS_INFO: {
   [ChainId.ROPSTEN]: [
     {
       tokens: [WETH[ChainId.ROPSTEN], ORN],
-      stakingRewardAddress: '0x883fBA08D1171703d99B6d7fB22B40D56a437532'
+      stakingRewardAddress: '0x6147e04E4F5c71bf32D1E9cf310eE816F1952363'
     }
     // {
     //   tokens: [ORN, USDT],

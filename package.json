@@ -1,6 +1,6 @@
 {
-  "name": "@uniswap/interface",
-  "description": "Uniswap Interface",
+  "name": "orn-liquidity-mining-ui",
+  "description": "ORN Liquidity Mining UI",
   "homepage": ".",
   "private": true,
   "devDependencies": {

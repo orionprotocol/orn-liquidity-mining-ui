@@ -1,5 +1,7 @@
 # orn-liquidity-mining-ui
 
+Based on https://github.com/Uniswap/uniswap-interface
+
 ## Development
 
 ### Install Dependencies
