@@ -40,34 +40,38 @@ const FooterLink = styled.a`
 `
 
 export default function Earn() {
-  const chainId = 1 // useActiveWeb3React()
+  const { chainId }= useActiveWeb3React()
 
   const RATE = (30000 * 10e7 / (60 * 60 * 24 * 7)).toFixed(0);
 
-  let stakingInfos: StakingInfo[] = [
-    {
-      stakingRewardAddress: ZERO_ADDRESS,
-      tokens: [WETH[ChainId.MAINNET], ORN],
-      stakedAmount: new TokenAmount(ORN, '0'),
-      earnedAmount: new TokenAmount(ORN, '0'),
-      totalStakedAmount: new TokenAmount(ORN, '0'),
-      totalRewardRate: new TokenAmount(ORN, RATE),
-      rewardRate: new TokenAmount(ORN, RATE),
-      periodFinish: undefined,
-      getHypotheticalRewardRate: () => new TokenAmount(ORN, RATE)
-    },
-    {
-      stakingRewardAddress: ZERO_ADDRESS,
-      tokens: [USDT, ORN],
-      stakedAmount: new TokenAmount(ORN, '0'),
-      earnedAmount: new TokenAmount(ORN, '0'),
-      totalStakedAmount: new TokenAmount(ORN, '0'),
-      totalRewardRate: new TokenAmount(ORN, RATE),
-      rewardRate: new TokenAmount(ORN, RATE),
-      periodFinish: undefined,
-      getHypotheticalRewardRate: () => new TokenAmount(ORN, RATE)
-    },
-  ]
+  const getStakingInfos = (): StakingInfo[] => {
+return [
+  {
+    stakingRewardAddress: ZERO_ADDRESS,
+    tokens: [WETH[ChainId.MAINNET], ORN],
+    stakedAmount: new TokenAmount(ORN, '0'),
+    earnedAmount: new TokenAmount(ORN, '0'),
+    totalStakedAmount: new TokenAmount(ORN, '0'),
+    totalRewardRate: new TokenAmount(ORN, RATE),
+    rewardRate: new TokenAmount(ORN, RATE),
+    periodFinish: undefined,
+    getHypotheticalRewardRate: () => new TokenAmount(ORN, RATE)
+  },
+  // {
+  //   stakingRewardAddress: ZERO_ADDRESS,
+  //   tokens: [USDT, ORN],
+  //   stakedAmount: new TokenAmount(ORN, '0'),
+  //   earnedAmount: new TokenAmount(ORN, '0'),
+  //   totalStakedAmount: new TokenAmount(ORN, '0'),
+  //   totalRewardRate: new TokenAmount(ORN, RATE),
+  //   rewardRate: new TokenAmount(ORN, RATE),
+  //   periodFinish: undefined,
+  //   getHypotheticalRewardRate: () => new TokenAmount(ORN, RATE)
+  // },
+]
+  };
+
+  let stakingInfos: StakingInfo[] = (chainId && chainId !== ChainId.MAINNET) ? [] : getStakingInfos();
 
   const DataRow = styled(RowBetween)`
     ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -77,9 +81,9 @@ export default function Earn() {
   // const p = new Pair(new TokenAmount(WETH[ChainId.ROPSTEN], '0'), new TokenAmount(ORN, '0'))
   // console.log('AAA', p.liquidityToken.address)
 
-  let stakingRewardsExist = Boolean(typeof chainId === 'number' && (STAKING_REWARDS_INFO[chainId]?.length ?? 0) > 0)
+  // let stakingRewardsExist = Boolean(typeof chainId === 'number' && (STAKING_REWARDS_INFO[chainId]?.length ?? 0) > 0)
 
-  stakingRewardsExist = true
+  let stakingRewardsExist = true
 
   return (
     <PageWrapper gap="lg" justify="center">
