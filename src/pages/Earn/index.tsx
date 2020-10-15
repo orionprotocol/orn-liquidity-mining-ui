@@ -88,7 +88,7 @@ export default function Earn() {
   ] as CardInfo[])
 
   const getCardInfos = () => {
-    httpGet('http://localhost:4040/api').then(dataString => {
+    httpGet('https://staking.orionprotocol.io/api').then(dataString => {
       const data = JSON.parse(dataString)
       cardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ORN'
       cardInfos[0].poolRate = Number(data['ORN-ETH'].poolRate).toLocaleString('en') + ' ORN / week'

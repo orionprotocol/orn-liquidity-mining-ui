@@ -15,6 +15,7 @@ import {useTotalSupply} from '../../data/TotalSupply'
 import {usePair} from '../../data/Reserves'
 import useUSDCPrice from '../../utils/useUSDCPrice'
 import {CardInfo} from "../../pages/Earn";
+import {useWalletModalToggle} from "../../state/application/hooks";
 
 const StatContainer = styled.div`
   display: flex;
@@ -74,6 +75,8 @@ const BottomSection = styled.div<{ showBackground: boolean }>`
 `
 
 export default function FakePoolCard({ cardInfo }: { cardInfo: CardInfo }) {
+  const toggleWalletModal = useWalletModalToggle()
+
   return (
     <Wrapper showBackground={false} bgColor={'#2172E5'}>
       <CardBGImage desaturate />
@@ -85,11 +88,9 @@ export default function FakePoolCard({ cardInfo }: { cardInfo: CardInfo }) {
           {cardInfo.currency0.symbol}-{cardInfo.currency1.symbol}
         </TYPE.white>
 
-        <StyledInternalLink to={`/orn/${currencyId(cardInfo.currency0)}/${currencyId(cardInfo.currency1)}`} style={{ width: '100%' }}>
-          <ButtonPrimary padding="8px" borderRadius="8px">
+          <ButtonPrimary padding="8px" borderRadius="8px" onClick={() => toggleWalletModal()}>
             {'Deposit'}
           </ButtonPrimary>
-        </StyledInternalLink>
       </TopSection>
 
       <StatContainer>
