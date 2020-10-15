@@ -77,13 +77,13 @@ export default function Earn() {
       currency0: unwrappedToken(ORN),
       currency1: ETHER,
       totalDeposited: 'Loading..',
-      poolRate: '0'
+      poolRate: 'Loading..'
     },
     {
       currency0: unwrappedToken(ORN),
       currency1: unwrappedToken(USDT),
       totalDeposited: 'Loading..',
-      poolRate: '0'
+      poolRate: 'Loading..'
     }
   ] as CardInfo[])
 
@@ -91,7 +91,9 @@ export default function Earn() {
     httpGet('http://localhost:4040/api').then(dataString => {
       const data = JSON.parse(dataString)
       cardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ORN'
+      cardInfos[0].poolRate = Number(data['ORN-ETH'].poolRate).toLocaleString('en') + ' ORN / week'
       cardInfos[1].totalDeposited = '$' +  Number(data['ORN-USDT'].totalDeposited).toLocaleString()
+      cardInfos[1].poolRate = Number(data['ORN-USDT'].poolRate).toLocaleString('en') + ' ORN / week'
       setCardInfos(cardInfos)
     })
   }
