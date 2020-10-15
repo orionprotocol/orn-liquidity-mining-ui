@@ -90,11 +90,12 @@ export default function Earn() {
   const getCardInfos = () => {
     httpGet('https://staking.orionprotocol.io/api').then(dataString => {
       const data = JSON.parse(dataString)
-      cardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ORN'
-      cardInfos[0].poolRate = Number(data['ORN-ETH'].poolRate).toLocaleString('en') + ' ORN / week'
-      cardInfos[1].totalDeposited = '$' +  Number(data['ORN-USDT'].totalDeposited).toLocaleString()
-      cardInfos[1].poolRate = Number(data['ORN-USDT'].poolRate).toLocaleString('en') + ' ORN / week'
-      setCardInfos(cardInfos)
+      const newCardInfos = cardInfos.concat()
+      newCardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ORN'
+      newCardInfos[0].poolRate = Number(data['ORN-ETH'].poolRate).toLocaleString('en') + ' ORN / week'
+      newCardInfos[1].totalDeposited = '$' +  Number(data['ORN-USDT'].totalDeposited).toLocaleString()
+      newCardInfos[1].poolRate = Number(data['ORN-USDT'].poolRate).toLocaleString('en') + ' ORN / week'
+      setCardInfos(newCardInfos)
     })
   }
 
@@ -106,7 +107,7 @@ export default function Earn() {
     }, 60 * 1000)
 
     return () => clearInterval(intervalId)
-  }, [])
+  }, [account])
 
   const DataRow = styled(RowBetween)`
     ${({ theme }) => theme.mediaWidth.upToSmall`
