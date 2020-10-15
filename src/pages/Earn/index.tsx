@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {AutoColumn} from '../../components/Column'
 import styled from 'styled-components'
 import {STAKING_REWARDS_INFO, useStakingInfo} from '../../state/stake/hooks'
@@ -9,8 +9,10 @@ import {CardBGImage, CardNoise, CardSection, DataCard} from '../../components/ea
 import {Countdown} from './Countdown'
 import Loader from '../../components/Loader'
 import {useActiveWeb3React} from '../../hooks'
-import {ChainId, Pair, Token, TokenAmount, WETH} from "@uniswap/sdk";
-import {ORN, USDT, ZERO_ADDRESS} from "../../constants";
+import {ChainId, Currency, ETHER, JSBI, Pair, Token, TokenAmount, WETH} from "@uniswap/sdk";
+import {ORN, UNI, USDT, ZERO_ADDRESS} from "../../constants";
+import FakePoolCard from "../../components/earn/FakePoolCard";
+import {unwrappedToken} from "../../utils/wrappedCurrency";
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
@@ -39,9 +41,70 @@ const FooterLink = styled.a`
   }
 `
 
+export interface CardInfo {
+  currency0: Currency
+  currency1: Currency
+  totalDeposited: string
+  poolRate: string
+}
+
+export function httpGet(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.onload = function (e) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(xhr.responseText);
+        } else {
+          reject(xhr.statusText);
+        }
+      }
+    }
+    xhr.onerror = function (e) {
+      reject(xhr.statusText);
+    };
+    xhr.send(null);
+  })
+}
+
 export default function Earn() {
-  const { chainId } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const stakingInfos = useStakingInfo()
+
+  const [cardInfos, setCardInfos] = useState([
+    {
+      currency0: unwrappedToken(ORN),
+      currency1: ETHER,
+      totalDeposited: 'Loading..',
+      poolRate: '0'
+    },
+    {
+      currency0: unwrappedToken(ORN),
+      currency1: unwrappedToken(USDT),
+      totalDeposited: 'Loading..',
+      poolRate: '0'
+    }
+  ] as CardInfo[])
+
+  const getCardInfos = () => {
+    httpGet('http://localhost:4040/api').then(dataString => {
+      const data = JSON.parse(dataString)
+      cardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ORN'
+      cardInfos[1].totalDeposited = '$' +  Number(data['ORN-USDT'].totalDeposited).toLocaleString()
+      setCardInfos(cardInfos)
+    })
+  }
+
+  useEffect(() => {
+    getCardInfos()
+
+    const intervalId = setInterval(() => {
+      getCardInfos()
+    }, 60 * 1000)
+
+    return () => clearInterval(intervalId)
+  }, [])
 
   const DataRow = styled(RowBetween)`
     ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -91,13 +154,16 @@ export default function Earn() {
           <TYPE.mediumHeader style={{ marginTop: '0.5rem' }}>Participating pools</TYPE.mediumHeader>
           <Countdown exactEnd={stakingInfos?.[0]?.periodFinish} />
         </DataRow>
-
         <PoolSection>
-          {stakingRewardsExist && stakingInfos?.length === 0 ? (
-            <Loader style={{ margin: 'auto' }} />
-          ) : !stakingRewardsExist ? (
-            'No active rewards'
+          {!account ? (
+              <>
+              <FakePoolCard cardInfo={cardInfos[0]} />
+              <FakePoolCard cardInfo={cardInfos[1]} />
+              </>
           ) : (
+              (!stakingInfos || stakingInfos.length === 0) ? (
+                      <Loader style={{ margin: 'auto' }} />
+                  ) :
             stakingInfos?.map(stakingInfo => {
               // need to sort by added liquidity here
               return <PoolCard key={stakingInfo.stakingRewardAddress} stakingInfo={stakingInfo} />
