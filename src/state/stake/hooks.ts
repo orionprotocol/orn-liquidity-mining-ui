@@ -17,26 +17,26 @@ export const STAKING_REWARDS_INFO: {
     stakingRewardAddress: string
   }[]
 } = {
-  // [ChainId.MAINNET]: [
+  [ChainId.MAINNET]: [
+    {
+      tokens: [ORN, WETH[ChainId.MAINNET]],
+      stakingRewardAddress: '0xe52ccf7b6ce4817449f2e6fa7efd7b567803e4b4'
+    }
+    // {
+    //   tokens: [ORN, USDT],
+    //   stakingRewardAddress: '0x6C3e4cb2E96B01F4b866965A91ed4437839A121a'
+    // }
+  ]
+  // [ChainId.ROPSTEN]: [
   //   {
-  //     tokens: [WETH[ChainId.MAINNET], ORN],
-  //     stakingRewardAddress: '0xa1484C3aa22a66C62b77E0AE78E15258bd0cB711'
-  //   }
+  //     tokens: [ORN, WETH[ChainId.ROPSTEN]],
+  //     stakingRewardAddress: '0x6147e04E4F5c71bf32D1E9cf310eE816F1952363'
+  //   },
   //   {
   //     tokens: [ORN, USDT],
-  //     stakingRewardAddress: '0x6C3e4cb2E96B01F4b866965A91ed4437839A121a'
+  //     stakingRewardAddress: '0x8d4f51555DA88A549598Fe258dD9208f64992FCD'
   //   }
-  // ],
-  [ChainId.ROPSTEN]: [
-    {
-      tokens: [ORN, WETH[ChainId.ROPSTEN]],
-      stakingRewardAddress: '0x6147e04E4F5c71bf32D1E9cf310eE816F1952363'
-    },
-    {
-      tokens: [ORN, USDT],
-      stakingRewardAddress: '0x8d4f51555DA88A549598Fe258dD9208f64992FCD'
-    }
-  ]
+  // ]
 }
 
 export interface StakingInfo {

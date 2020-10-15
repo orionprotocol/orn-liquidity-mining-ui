@@ -46,6 +46,7 @@ export interface CardInfo {
   currency1: Currency
   totalDeposited: string
   poolRate: string
+  periodFinish: Date | undefined
 }
 
 export function httpGet(url: string): Promise<string> {
@@ -77,24 +78,31 @@ export default function Earn() {
       currency0: unwrappedToken(ORN),
       currency1: ETHER,
       totalDeposited: 'Loading..',
-      poolRate: 'Loading..'
+      poolRate: 'Loading..',
+      periodFinish: undefined
     },
-    {
-      currency0: unwrappedToken(ORN),
-      currency1: unwrappedToken(USDT),
-      totalDeposited: 'Loading..',
-      poolRate: 'Loading..'
-    }
+    // {
+    //   currency0: unwrappedToken(ORN),
+    //   currency1: unwrappedToken(USDT),
+    //   totalDeposited: 'Loading..',
+    //   poolRate: 'Loading..',
+    //   periodFinish: undefined
+    // }
   ] as CardInfo[])
 
   const getCardInfos = () => {
     httpGet('https://staking.orionprotocol.io/api').then(dataString => {
       const data = JSON.parse(dataString)
       const newCardInfos = cardInfos.concat()
+
       newCardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ORN'
       newCardInfos[0].poolRate = Number(data['ORN-ETH'].poolRate).toLocaleString('en') + ' ORN / week'
-      newCardInfos[1].totalDeposited = '$' +  Number(data['ORN-USDT'].totalDeposited).toLocaleString()
-      newCardInfos[1].poolRate = Number(data['ORN-USDT'].poolRate).toLocaleString('en') + ' ORN / week'
+      newCardInfos[0].periodFinish = new Date(Number(data['ORN-ETH'].periodFinish))
+
+      // newCardInfos[1].totalDeposited = '$' + Number(data['ORN-USDT'].totalDeposited).toLocaleString()
+      // newCardInfos[1].poolRate = Number(data['ORN-USDT'].poolRate).toLocaleString('en') + ' ORN / week'
+      // newCardInfos[1].periodFinish = new Date(Number(data['ORN-USDT'].periodFinish))
+
       setCardInfos(newCardInfos)
     })
   }
@@ -114,8 +122,8 @@ export default function Earn() {
     flex-direction: column;
   `};
   `
-  // const p = new Pair(new TokenAmount(ORN, '0'), new TokenAmount(WETH[ChainId.ROPSTEN], '0'),)
-  // console.log('AAA', p.liquidityToken.address)
+  // const p = new Pair(new TokenAmount(ORN, '0'), new TokenAmount(WETH[ChainId.MAINNET], '0'),)
+  // console.log('QQQ', p.liquidityToken.address)
 
   // const b = new Pair(new TokenAmount(ORN, '0'), new TokenAmount(USDT, '0'));
   // console.log('BBB', b.liquidityToken.address)
@@ -155,13 +163,13 @@ export default function Earn() {
       <AutoColumn gap="lg" style={{ width: '100%', maxWidth: '720px' }}>
         <DataRow style={{ alignItems: 'baseline' }}>
           <TYPE.mediumHeader style={{ marginTop: '0.5rem' }}>Participating pools</TYPE.mediumHeader>
-          <Countdown exactEnd={stakingInfos?.[0]?.periodFinish} />
+          <Countdown exactEnd={stakingInfos?.[0]?.periodFinish || cardInfos?.[0]?.periodFinish} />
         </DataRow>
         <PoolSection>
           {!account ? (
               <>
               <FakePoolCard cardInfo={cardInfos[0]} />
-              <FakePoolCard cardInfo={cardInfos[1]} />
+              {/*<FakePoolCard cardInfo={cardInfos[1]} />*/}
               </>
           ) : (
               (!stakingInfos || stakingInfos.length === 0) ? (
