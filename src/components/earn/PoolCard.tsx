@@ -161,6 +161,10 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
             ?.multiply(`${60 * 60 * 24 * 7}`)
             ?.toFixed(0, { groupSeparator: ',' })} ORN / week`}</TYPE.white>
         </RowBetween>
+        <RowBetween>
+          <TYPE.white> Bonus pool </TYPE.white>
+          <TYPE.white>24,000 ORN / month</TYPE.white>
+        </RowBetween>
       </StatContainer>
 
       {isStaking && (
