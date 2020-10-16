@@ -95,7 +95,7 @@ export default function Earn() {
       const data = JSON.parse(dataString)
       const newCardInfos = cardInfos.concat()
 
-      newCardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ORN'
+      newCardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ETH'
       newCardInfos[0].poolRate = Number(data['ORN-ETH'].poolRate).toLocaleString('en') + ' ORN / week'
       newCardInfos[0].periodFinish = new Date(Number(data['ORN-ETH'].periodFinish * 1000))
 
