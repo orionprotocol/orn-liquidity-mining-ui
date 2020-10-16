@@ -14,6 +14,7 @@ import {unwrappedToken, wrappedCurrency} from '../../utils/wrappedCurrency'
 import {useTotalSupply} from '../../data/TotalSupply'
 import {usePair} from '../../data/Reserves'
 import useUSDCPrice from '../../utils/useUSDCPrice'
+import {CardInfo} from "../../pages/Earn";
 
 const StatContainer = styled.div`
   display: flex;
@@ -73,7 +74,7 @@ const BottomSection = styled.div<{ showBackground: boolean }>`
   z-index: 1;
 `
 
-export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) {
+export default function PoolCard({ stakingInfo, cardInfo }: { stakingInfo: StakingInfo, cardInfo: CardInfo }) {
   const token0 = stakingInfo.tokens[0]
   const token1 = stakingInfo.tokens[1]
 
@@ -164,6 +165,10 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
         <RowBetween>
           <TYPE.white> Bonus pool </TYPE.white>
           <TYPE.white>24,000 ORN / month</TYPE.white>
+        </RowBetween>
+        <RowBetween>
+          <TYPE.white> Current APR </TYPE.white>
+          <TYPE.white>{cardInfo.currentAPR}</TYPE.white>
         </RowBetween>
       </StatContainer>
 

@@ -47,6 +47,7 @@ export interface CardInfo {
   totalDeposited: string
   poolRate: string
   periodFinish: Date | undefined
+  currentAPR: string
 }
 
 export function httpGet(url: string): Promise<string> {
@@ -79,7 +80,8 @@ export default function Earn() {
       currency1: ETHER,
       totalDeposited: 'Loading..',
       poolRate: 'Loading..',
-      periodFinish: undefined
+      periodFinish: undefined,
+      currentAPR: 'Loading..'
     },
     // {
     //   currency0: unwrappedToken(ORN),
@@ -95,9 +97,27 @@ export default function Earn() {
       const data = JSON.parse(dataString)
       const newCardInfos = cardInfos.concat()
 
-      newCardInfos[0].totalDeposited = Number(data['ORN-ETH'].totalDeposited).toLocaleString('en') + ' ETH'
-      newCardInfos[0].poolRate = Number(data['ORN-ETH'].poolRate).toLocaleString('en') + ' ORN / week'
+      const ethToUsd = Number(data.ethToUsd)
+      const ornToUsd = Number(data.ornToUsd)
+
+      const totalDepositedETH = Number(data['ORN-ETH'].totalDeposited)
+      const totalDeposited = ethToUsd ? ('$' + Math.floor(totalDepositedETH * ethToUsd).toLocaleString('en')) : (totalDepositedETH.toLocaleString('en') + ' ETH')
+
+      const poolRateORN = Number(data['ORN-ETH'].poolRate)
+
+      const bonusRate = 24000
+
+      let sCurrentAPR = 'Loading..'
+
+      if (ethToUsd && ornToUsd) {
+          const currentAPR = ((poolRateORN * 365 / 7 + bonusRate * 365 / 30) * ornToUsd) / (totalDepositedETH * ethToUsd);
+          sCurrentAPR = (currentAPR * 100).toFixed(2) + '%'
+      }
+
+      newCardInfos[0].totalDeposited = totalDeposited
+      newCardInfos[0].poolRate = poolRateORN.toLocaleString('en') + ' ORN / week'
       newCardInfos[0].periodFinish = new Date(Number(data['ORN-ETH'].periodFinish * 1000))
+      newCardInfos[0].currentAPR = sCurrentAPR
 
       // newCardInfos[1].totalDeposited = '$' + Number(data['ORN-USDT'].totalDeposited).toLocaleString()
       // newCardInfos[1].poolRate = Number(data['ORN-USDT'].poolRate).toLocaleString('en') + ' ORN / week'
@@ -177,7 +197,7 @@ export default function Earn() {
                   ) :
             stakingInfos?.map(stakingInfo => {
               // need to sort by added liquidity here
-              return <PoolCard key={stakingInfo.stakingRewardAddress} stakingInfo={stakingInfo} />
+              return <PoolCard key={stakingInfo.stakingRewardAddress} stakingInfo={stakingInfo} cardInfo={cardInfos[0]} />
             })
           )}
         </PoolSection>
