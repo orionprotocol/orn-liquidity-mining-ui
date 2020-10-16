@@ -20,7 +20,7 @@ export const STAKING_REWARDS_INFO: {
   [ChainId.MAINNET]: [
     {
       tokens: [ORN, WETH[ChainId.MAINNET]],
-      stakingRewardAddress: '0xe52ccf7b6ce4817449f2e6fa7efd7b567803e4b4'
+      stakingRewardAddress: '0x1de3877c9012824c9acc39995647754b1fa9959f'
     }
     // {
     //   tokens: [ORN, USDT],
