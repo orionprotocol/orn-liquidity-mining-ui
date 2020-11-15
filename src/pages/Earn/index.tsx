@@ -105,7 +105,7 @@ export default function Earn() {
 
       const poolRateORN = Number(data['ORN-ETH'].poolRate)
 
-      const bonusRate = 24000
+      const bonusRate = 30000
 
       let sCurrentAPR = 'Loading..'
 

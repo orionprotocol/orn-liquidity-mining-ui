@@ -164,7 +164,7 @@ export default function PoolCard({ stakingInfo, cardInfo }: { stakingInfo: Staki
         </RowBetween>
         <RowBetween>
           <TYPE.white> Bonus pool </TYPE.white>
-          <TYPE.white>24,000 ORN / month</TYPE.white>
+          <TYPE.white>30,000 ORN / month</TYPE.white>
         </RowBetween>
         <RowBetween>
           <TYPE.white> Current APR </TYPE.white>
