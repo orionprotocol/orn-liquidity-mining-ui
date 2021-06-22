@@ -91,7 +91,7 @@ export default function UniBalanceContent({ setShowUniBalanceModal }: { setShowU
                   <TYPE.white color="white">
                     {uniToClaim?.toFixed(4, { groupSeparator: ',' })}{' '}
                     {uniToClaim && uniToClaim.greaterThan('0') && (
-                      <StyledInternalLink onClick={() => setShowUniBalanceModal(false)} to="/orn">
+                      <StyledInternalLink onClick={() => setShowUniBalanceModal(false)} to="/orn/0x0258F474786DdFd37ABCE6df6BBb1Dd5dfC4434a/ETH">
                         (claim)
                       </StyledInternalLink>
                     )}
