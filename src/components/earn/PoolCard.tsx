@@ -158,9 +158,10 @@ export default function PoolCard({ stakingInfo, cardInfo }: { stakingInfo: Staki
         </RowBetween>
         <RowBetween>
           <TYPE.white> Pool rate </TYPE.white>
-          <TYPE.white>{`${stakingInfo.totalRewardRate
+          <TYPE.white>0</TYPE.white>
+          {/* <TYPE.white>{`${stakingInfo.totalRewardRate
             ?.multiply(`${60 * 60 * 24 * 7}`)
-            ?.toFixed(0, { groupSeparator: ',' })} ORN / week`}</TYPE.white>
+            ?.toFixed(0, { groupSeparator: ',' })} ORN / week`}</TYPE.white> */}
         </RowBetween>
         <RowBetween>
           <TYPE.white> Bonus pool </TYPE.white>
@@ -168,7 +169,8 @@ export default function PoolCard({ stakingInfo, cardInfo }: { stakingInfo: Staki
         </RowBetween>
         <RowBetween>
           <TYPE.white> Current APR </TYPE.white>
-          <TYPE.white>{cardInfo.currentAPR}</TYPE.white>
+          <TYPE.white>0</TYPE.white>
+          {/* <TYPE.white>{cardInfo.currentAPR}</TYPE.white> */}
         </RowBetween>
       </StatContainer>
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { STAKING_GENESIS, REWARDS_DURATION_DAYS } from '../../state/stake/hooks'
 import { TYPE } from '../../theme'
+import { ExternalLink } from '../../theme/components'
 
 const MINUTE = 60
 const HOUR = MINUTE * 60
@@ -63,6 +64,9 @@ export function Countdown({ exactEnd }: { exactEnd?: Date }) {
             .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}
         </code>
       )}
+      <p style={{ margin: 0 }}>
+        Rewards are now on <ExternalLink href="https://trade.orionprotocol.io/pools">trade.orionprotocol.io/pools</ExternalLink>
+      </p>
     </TYPE.black>
   )
 }
